@@ -5,7 +5,7 @@ export function Header() {
         <nav className="bg-blue-400 border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                 <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="./logo.jpeg" className="h-16" alt="Logo" />
+                    <img src="./logo.png" className="h-16" alt="Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                         Gestão Studio
                     </span>
