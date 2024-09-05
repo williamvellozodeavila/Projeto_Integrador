@@ -29,19 +29,19 @@ model Profissional {
   especialidade  String
   foto           String
   bebes          Bebe[]
-  @@map("medicos")
+  @@map("profissionais")
 }
 
 
-model Bebe {
+model Cliente {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(60)
-  dataNasc  DateTime
-  peso      Decimal  @db.Decimal(6, 3)
-  altura    Decimal  @db.Decimal(5, 2)
+  endereco  String   @db.VarChar(100)
+  telefone  Int      @db.Int
+  foto      String
   mae       Mae      @relation(fields: [maeId], references: [id])
   maeId     Int
   medico    Medico   @relation(fields: [medicoId], references: [id])
   medicoId     Int
-  @@map("bebes")
+  @@map("clientes")
 }

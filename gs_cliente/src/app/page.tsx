@@ -6,9 +6,12 @@ export default function Home() {
      <main>
         <InputPesquisa />
         
-        <section className="max-w-screen-xl mx-auto">
-          <h1 className="mb-5 mt-3 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Serviços <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">em Destaque</span></h1>
-        
+        <section className="mt-5 mb-5 max-w-screen-xl mx-auto">
+          <div className="flex flex-row items-center justify-between pb-10">
+            <h1 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Serviços <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">em Destaque</span></h1>
+            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">+ Novo Agendamento</button>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
 
             <ItemServiços />
