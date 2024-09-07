@@ -1,0 +1,20 @@
+meta {
+  name: Inclusao
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3004/servicos
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Penteado",
+    "tempo": 60,
+    "preco": 120,
+    "foto": "https://www.dicasdemulher.com.br/wp-content/uploads/2019/04/penteados-semi-presos-70.jpg"
+  }
+}

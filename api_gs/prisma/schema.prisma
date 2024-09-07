@@ -16,11 +16,19 @@ datasource db {
 model Servico {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(60)
-  tempo     Int      @db.Int
+  tempo     Int      @db.SmallInt
   preco     Decimal  @db.Decimal(10, 2)
   foto      String
-  Tipos     Tipo[]
   @@map("servicos")
+}
+
+model Cliente {
+  id              Int      @id @default(autoincrement())
+  nome            String   @db.VarChar(60)
+  endereco        String   @db.VarChar(100)
+  telefone        String   @db.VarChar(30)
+  foto            String
+  @@map("clientes")
 }
 
 model Profissional {
@@ -28,20 +36,5 @@ model Profissional {
   nome           String         @db.VarChar(60)
   especialidade  String
   foto           String
-  bebes          Bebe[]
   @@map("profissionais")
-}
-
-
-model Cliente {
-  id        Int      @id @default(autoincrement())
-  nome      String   @db.VarChar(60)
-  endereco  String   @db.VarChar(100)
-  telefone  Int      @db.Int
-  foto      String
-  mae       Mae      @relation(fields: [maeId], references: [id])
-  maeId     Int
-  medico    Medico   @relation(fields: [medicoId], references: [id])
-  medicoId     Int
-  @@map("clientes")
 }

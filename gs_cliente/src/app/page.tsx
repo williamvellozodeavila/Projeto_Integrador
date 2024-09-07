@@ -1,10 +1,30 @@
+'use client'
 import { InputPesquisa } from "@/components/InputPesquisa"
 import { ItemServiços } from "@/components/ItemServiços";
+import { ServicosI } from "@/utils/types/servicos";
+import { useEffect, useState } from "react";
+import { Toaster } from "sonner";
 
 export default function Home() {
+  const [servicos, setServicos] = useState<ServicosI[]>([])
+
+  useEffect(() => {
+    async function buscaDados() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/servicos`)
+      const dados = await response.json()
+      setServicos(dados)
+
+    } 
+    buscaDados()
+  }, [])
+
+  const listaServicos = servicos.map( servico => (
+    <ItemServiços data={servico} key={servico.id} />
+  ))
+
   return (
      <main>
-        <InputPesquisa />
+        <InputPesquisa setServicos={setServicos} />
         
         <section className="mt-5 mb-5 max-w-screen-xl mx-auto">
           
@@ -12,15 +32,12 @@ export default function Home() {
          
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-
-            <ItemServiços />
-            <ItemServiços />
-            <ItemServiços />
+            {listaServicos}
 
           </div>
         </section>
       
-
+        <Toaster position="top-right" richColors  />
      </main>
   );
 }
