@@ -91,20 +91,19 @@ router.get("/pesquisa/:termo", async (req, res) => {
       res.status(400).json(error)
     }
   }
+})
 
-  router.get("/:id", async (req, res) => {
-    const { id } = req.params
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
 
-    try {
-      const servico = await prisma.servico.findUnique({
-        where: { id: Number(id)}
-    })
-      res.status(200).json(servico)
-    } catch (error) {
-      res.status(400).json(error)
-    }
+  try {
+    const servico = await prisma.servico.findUnique({
+      where: { id: Number(id)}
   })
-  
+    res.status(200).json(servico)
+  } catch (error) {
+    res.status(400).json(error)
+  }
 })
 
 export default router

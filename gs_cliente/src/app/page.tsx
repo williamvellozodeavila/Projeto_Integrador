@@ -1,6 +1,6 @@
 'use client'
 import { InputPesquisa } from "@/components/InputPesquisa"
-import { ItemServiços } from "@/components/ItemServiços";
+import { ItemServiços } from "@/components/ItemServicos";
 import { ServicosI } from "@/utils/types/servicos";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
