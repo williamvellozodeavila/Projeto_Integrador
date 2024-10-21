@@ -32,7 +32,9 @@ export function Header() {
                     <li>
                         <a href="#" className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Agenda</a>
                     </li>
-                    
+                    <li>
+                        <a href="/propostas" className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Propostas</a>
+                    </li>
                 </ul>
             
             <div className="flex items-center space-x-6 rtl:space-x-reverse">
@@ -49,9 +51,7 @@ export function Header() {
                 </>
                 :
                 <>
-                <span className="text-sm  text-white dark:text-white hover:underline">
-                    (identifique-se)
-                </span>
+                
                 <Link href="/login" className="text-bold  text-white dark:text-white hover:underline">
                     Entrar
                 </Link>
