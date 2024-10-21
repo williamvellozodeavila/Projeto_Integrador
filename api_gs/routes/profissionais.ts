@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
   const { nome,  especialidade, foto } = req.body
 
   if (!nome || !especialidade || !foto) {
-    res.status(400).json({ "erro": "Informe crm, nome, celular e especialidade" })
+    res.status(400).json({ "erro": "Informe nome, celular e especialidade" })
     return
   }
 

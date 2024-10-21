@@ -14,20 +14,23 @@ datasource db {
 }
 
 model Servico {
-  id        Int      @id @default(autoincrement())
-  nome      String   @db.VarChar(60)
-  tempo     Int      @db.SmallInt
-  preco     Decimal  @db.Decimal(10, 2)
-  foto      String
+  id              Int      @id @default(autoincrement())
+  nome            String   @db.VarChar(60)
+  tempo           Int      @db.SmallInt
+  preco           Decimal  @db.Decimal(10, 2)
+  foto            String
+  propostas       Proposta[]
   @@map("servicos")
 }
 
 model Cliente {
-  id              Int      @id @default(autoincrement())
+  id              String   @db.VarChar(36) @id @default(uuid())
   nome            String   @db.VarChar(60)
-  endereco        String   @db.VarChar(100)
-  telefone        String   @db.VarChar(30)
-  foto            String
+  email           String   @db.VarChar(60) @unique
+  senha           String   @db.VarChar(60)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  propostas       Proposta[]
   @@map("clientes")
 }
 
@@ -37,4 +40,17 @@ model Profissional {
   especialidade  String
   foto           String
   @@map("profissionais")
+}
+
+model Proposta {
+  id          Int       @id @default(autoincrement())
+  cliente     Cliente   @relation(fields: [clienteId], references: [id])
+  clienteId   String    @db.VarChar(36)
+  servico     Servico   @relation(fields: [servicoId], references: [id])
+  servicoId   Int
+  descricao   String    @db.VarChar(255)
+  resposta    String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt  
+  @@map("propostas")
 }

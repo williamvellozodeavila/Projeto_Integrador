@@ -1,0 +1,19 @@
+meta {
+  name: Inclusao
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3004/clientes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Ana Maria Santos",
+    "email": "ana@gmail.com",
+    "senha": "Ana123##"
+  }
+}

@@ -4,11 +4,27 @@ import { ItemServiços } from "@/components/ItemServiços";
 import { ServicosI } from "@/utils/types/servicos";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
+import { useClienteStore } from "@/context/cliente";
 
 export default function Home() {
   const [servicos, setServicos] = useState<ServicosI[]>([])
+  const { logaCliente } = useClienteStore()
 
   useEffect(() => {
+    
+    async function buscaCliente(idCliente: string) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/${idCliente}`)
+      if (response.status == 200) {
+        const dados = await response.json()
+        logaCliente(dados)
+      }
+    }
+
+    if (localStorage.getItem("client_key")) {
+      const idClienteLocal = localStorage.getItem("client_key") as string
+      buscaCliente(idClienteLocal)
+    } 
+    
     async function buscaDados() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/servicos`)
       const dados = await response.json()
