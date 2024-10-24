@@ -24,13 +24,14 @@ model Servico {
 }
 
 model Cliente {
-  id              String   @db.VarChar(36) @id @default(uuid())
-  nome            String   @db.VarChar(60)
-  email           String   @db.VarChar(60) @unique
-  senha           String   @db.VarChar(60)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  propostas       Proposta[]
+  id                String   @db.VarChar(36) @id @default(uuid())
+  nome              String   @db.VarChar(60)
+  email             String   @db.VarChar(60) @unique
+  senha             String   @db.VarChar(60)
+  codigoRecuperacao String? // Novo campo para código de recuperação
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  propostas         Proposta[]
   @@map("clientes")
 }
 

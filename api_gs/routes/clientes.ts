@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { Router } from "express"
 import bcrypt from 'bcrypt'
+import nodemailer from 'nodemailer';
 
 const prisma = new PrismaClient()
 const router = Router()
@@ -53,6 +54,25 @@ function validaSenha(senha: string) {
   }
 
   return mensa
+}
+
+async function sendRecoveryEmail(email: string, code: string) {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // ou outro serviço de sua escolha
+    auth: {
+      user: process.env.EMAIL_USER, // seu e-mail
+      pass: process.env.EMAIL_PASS, // sua senha do e-mail
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Código de Recuperação de Senha',
+    text: `Seu código de recuperação é: ${code}`,
+  };
+
+  return transporter.sendMail(mailOptions);
 }
 
 router.post("/", async (req, res) => {
@@ -184,5 +204,71 @@ router.post("/cadastro", async (req, res) => {
   }
 });
 
+router.post("/recuperar-senha", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    res.status(400).json({ erro: "Informe o e-mail do cliente" });
+    return;
+  }
+
+  try {
+    const cliente = await prisma.cliente.findUnique({ where: { email } });
+
+    if (!cliente) {
+      return res.status(404).json({ erro: "E-mail não cadastrado" });
+    }
+
+    // Gerar um código de recuperação aleatório
+    const codigoRecuperacao = Math.floor(100000 + Math.random() * 900000).toString(); // Código de 6 dígitos
+    await prisma.cliente.update({
+      where: { email },
+      data: { codigoRecuperacao },
+    });
+
+    // Enviar o código para o e-mail do cliente
+    await sendRecoveryEmail(email, codigoRecuperacao);
+
+    res.status(200).json({ mensagem: "Código de recuperação enviado!" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+router.post("/alterar-senha", async (req, res) => {
+  const { email, codigoRecuperacao, novaSenha, repetirSenha } = req.body;
+
+  if (!email || !codigoRecuperacao || !novaSenha || !repetirSenha) {
+    return res.status(400).json({ erro: "Informe e-mail, código de recuperação e as novas senhas." });
+  }
+
+  if (novaSenha !== repetirSenha) {
+    return res.status(400).json({ erro: "As senhas não coincidem." });
+  }
+
+  try {
+    const cliente = await prisma.cliente.findUnique({ where: { email } });
+
+    if (!cliente) {
+      return res.status(404).json({ erro: "E-mail não cadastrado" });
+    }
+
+    if (cliente.codigoRecuperacao !== codigoRecuperacao) {
+      return res.status(400).json({ erro: "Código de recuperação inválido" });
+    }
+
+    const salt = bcrypt.genSaltSync(12);
+    const hash = bcrypt.hashSync(novaSenha, salt);
+
+    await prisma.cliente.update({
+      where: { email },
+      data: { senha: hash, codigoRecuperacao: null }, // Limpa o código após a alteração da senha
+    });
+
+    res.status(200).json({ mensagem: "Senha alterada com sucesso!" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 export default router
