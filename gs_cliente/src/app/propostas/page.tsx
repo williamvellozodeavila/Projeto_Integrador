@@ -6,23 +6,24 @@ import { PropostaI } from "@/utils/types/propostas";
 
 export default function Propostas() {
   const [propostas, setPropostas] = useState<PropostaI[]>([])
-  const { cliente } = useClienteStore()
-  const { logaCliente } = useClienteStore()
+  const { cliente, logaCliente } = useClienteStore()
+
 
   useEffect(() => {
-        async function buscaCliente(idCliente: string) {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/${idCliente}`)
-        if (response.status == 200) {
-          const dados = await response.json()
-          logaCliente(dados)
-        }
+
+
+    async function buscaCliente(idCliente: string) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/${idCliente}`)
+      if (response.status == 200) {
+        const dados = await response.json()
+        logaCliente(dados)
       }
+    }
 
     if (localStorage.getItem("client_key")) {
-        const idClienteLocal = localStorage.getItem("client_key") as string
-        buscaCliente(idClienteLocal)
-      } 
-
+      const idClienteLocal = localStorage.getItem("client_key") as string
+      buscaCliente(idClienteLocal)
+    } 
 
     async function buscaDados() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/propostas/${cliente.id}`)
@@ -30,6 +31,7 @@ export default function Propostas() {
       setPropostas(dados)
     }
     buscaDados()
+    
   }, [])
 
   // para retornar apenas a data do campo no banco de dados
@@ -47,7 +49,7 @@ export default function Propostas() {
         {proposta.servico.nome}
       </th>
       <td className="px-6 py-4">
-        <img src={proposta.servico.foto} className="fotoCarro" alt="Foto Carro" />
+        <img src={proposta.servico.foto} className="fotoServico" alt="Foto Serviço" />
       </td>
       <td className="px-6 py-4">
         <p><b>{proposta.descricao}</b></p>

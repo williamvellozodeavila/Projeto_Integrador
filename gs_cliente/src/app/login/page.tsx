@@ -85,10 +85,11 @@ export default function Login() {
               </div>
               <button type="submit" className="w-full text-white bg-orange-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Entrar</button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Você não está cadastrado? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                  Cadastre-se</a>
-              </p>
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                  Você não está cadastrado? <a href="/cadastro" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    Cadastre-se
+                  </a>
+                </p>
             </form>
           </div>
         </div>

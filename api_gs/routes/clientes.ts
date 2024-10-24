@@ -147,6 +147,42 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json(error)
   }
+
 })
+
+router.post("/cadastro", async (req, res) => {
+  const { nome, email, senha } = req.body;
+
+  if (!nome || !email || !senha) {
+    res.status(400).json({ erro: "Informe nome, email e senha" });
+    return;
+  }
+
+  // Verifica se o cliente já existe no banco de dados
+  const clienteExistente = await prisma.cliente.findUnique({ where: { email } });
+  if (clienteExistente) {
+    res.status(400).json({ erro: "E-mail já cadastrado!" });
+    return;
+  }
+
+  const erros = validaSenha(senha);
+  if (erros.length > 0) {
+    res.status(400).json({ erro: erros.join("; ") });
+    return;
+  }
+
+  const salt = bcrypt.genSaltSync(12);
+  const hash = bcrypt.hashSync(senha, salt);
+
+  try {
+    const cliente = await prisma.cliente.create({
+      data: { nome, email, senha: hash }
+    });
+    res.status(201).json(cliente);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
 
 export default router
