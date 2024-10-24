@@ -70,7 +70,7 @@ export default function Propostas() {
   return (
     <section className="max-w-7xl mx-auto">
       <h1 className="mb-6 mt-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
-        Listagem de <span className="underline underline-offset-3 decoration-8 decoration-orange-400 dark:decoration-orange-600">Minhas Propostas</span></h1>
+        Listagem de <span className="underline underline-offset-3 decoration-8 decoration-blue-600 dark:decoration-orange-600">Minhas Propostas</span></h1>
 
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
