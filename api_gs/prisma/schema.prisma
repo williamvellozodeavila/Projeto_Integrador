@@ -18,8 +18,11 @@ model Servico {
   nome            String   @db.VarChar(60)
   tempo           Int      @db.SmallInt
   preco           Decimal  @db.Decimal(10, 2)
+  admin           Admin    @relation(fields: [adminId], references: [id])
+  adminId         Int      @default(1)
   foto            String
   propostas       Proposta[]
+
   @@map("servicos")
 }
 
@@ -54,4 +57,15 @@ model Proposta {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt  
   @@map("propostas")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  nome         String   @db.VarChar(60)
+  email        String   @db.VarChar(60) @unique
+  senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt  
+  servicos     Servico[]
+  @@map("admins")
 }

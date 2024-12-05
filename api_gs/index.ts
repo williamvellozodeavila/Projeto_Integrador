@@ -5,6 +5,8 @@ import profissionaisRoutes from './routes/profissionais'
 import servicosRoutes from './routes/servicos'
 import clientesRoutes from './routes/clientes'
 import propostasRoutes from './routes/propostas'
+import adminsRoutes from './routes/admins'
+import dashboardRoutes from './routes/dashboard'
 
 const app = express()
 const port = 3004
@@ -16,6 +18,8 @@ app.use("/profissionais", profissionaisRoutes)
 app.use("/servicos", servicosRoutes)
 app.use("/clientes", clientesRoutes)
 app.use("/propostas", propostasRoutes)
+app.use("/admins", adminsRoutes)
+app.use("/dashboard", dashboardRoutes)
 
 app.get('/', (req, res) => {
   res.send('Gestão Studio')
